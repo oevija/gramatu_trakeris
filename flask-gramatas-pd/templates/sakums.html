@@ -1,0 +1,15 @@
+{% extends "baze.html" %}
+{% block content %}
+<div class = "container">
+<div class="row">
+	<div class="col-6 mx-auto">
+<h1>Sveiki</h1>
+<p>jasaraksta tekstss...</p>
+</div>
+
+<div class = "row col-6">
+<img class="img-fluid mx-auto d-block my-4" src="{{ url_for('static', filename='img/books.jpg') }}" >
+</div>
+</div>
+
+{% endblock %}

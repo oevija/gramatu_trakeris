@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Izlasīto grāmatu bibliotēka</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+		<style>
+        body { background-color: #fdfdfd; }
+        .book-status-bar { background: #d32f2f; color: white; font-size: 0.85rem; padding: 5px; text-align: center; }
+        .nav-pills .nav-link.active { background-color: #388e3c; }
+        footer { margin-top: 50px; color: #888; text-align: center; }
+    </style>
+</head>
+</head>
+<body>
+	
+<div class="book-status-bar">
+        🟢 Serveris: tiešsaistē  
+    </div>
+	<div class = "container">
+		<h1>Izlasīto grāmatu bibliotēka</h1>
+		<nav>
+			<a href="/">Sākums</a> | 
+			<a href="/pieteikties">Pieteikties</a> |
+			<a href="/registreties">Registreties</a> |
+			<a href="/pievienot">Pievienot grāmatu</a> |
+			<a href="/visas">Visas grāmatas</a> |
+			<a href="/iziet">Iziet</a> |
+
+			
+		</nav>
+
+		<hr>
+
+
+		
+		{% block content %}
+		{% endblock %}
+
+		<hr>
+		<footer>2026. gads | Izlasīto grāmatu bibliotēka | Veidoja Evija Orlovska</footer>
+	</div>
+
+
+</body>
+</html>
