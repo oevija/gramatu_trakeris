@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-6 mx-auto">
+       <h2>Pievieno izlasīto grāmatu</h2>
+       <p>Sveiki, {{vards}}!</p>
+   </div>
+</div>
+
+<div class="row">
+    <div class="col-6 mx-auto">
+        <form method="POST" action="/pievienot">
+         <label for="nosaukums" class="form-label">Nosaukums:</label>   
+         <input type="text" class="form-control" id="nosaukums" name="nosaukums" required>
+         <label for="lpp" class="form-label">Lapu skaits
+            <input class="form-control" type="number" name="lpp" required><br>
+            <label for="izmers" class="form-label">Tavs vērtējums</label>
+            <select name="izmers" class="form-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select><br>
+            
+            
+            
+            <button type="submit" class="btn btn-primary w-100">Pasūtīt</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

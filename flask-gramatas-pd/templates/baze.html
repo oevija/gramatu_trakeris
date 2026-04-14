@@ -22,13 +22,14 @@
 		<h1>Izlasīto grāmatu bibliotēka</h1>
 		<nav>
 			<a href="/">Sākums</a> | 
-			<a href="/pieteikties">Pieteikties</a> |
-			<a href="/registreties">Registreties</a> |
+			{% if session.get("id") %}
 			<a href="/pievienot">Pievienot grāmatu</a> |
 			<a href="/visas">Visas grāmatas</a> |
 			<a href="/iziet">Iziet</a> |
-
-			
+			{% else %}
+			<a href="/pieteikties">Pieteikties</a> |
+			<a href="/registreties">Registreties</a> |
+			{%endif%}	
 		</nav>
 
 		<hr>
