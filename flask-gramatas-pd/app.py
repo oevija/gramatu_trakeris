@@ -62,11 +62,29 @@ def registreties():
 
     return render_template("registreties.html")
     
-@app.route("/'pievienot")
+@app.route("/pievienot", methods=['GET', 'POST'])
 def pievienot():
+    if request.method == 'POST':
+        conn = sqlite3.connect("biblioteka.db")
+        conn.row_factory = sqlite3.Row  
+        cursor = conn.cursor()
 
+        nosaukums= request.form.get("nosaukums")
+        autors = request.form.get("autors")
+        lpp= int(request.form.get("lpp"))
+        saku = request.form.get("saku")
+        beidzu = request.form.get("beidzu")
+        vertejums= int(request.form.get("vertejums"))
 
-    return render_template("pievienot.html",vards =session['vards'])
+        insert = """INSERT OR IGNORE INTO gramatas(nosaukums,autors,lapas,saku_lasit,izlasits,vertejums) 
+                VALUES(?,?,?,?,?,?)
+            """
+        cursor.execute(insert, (nosaukums, autors,lpp,saku,beidzu,vertejums))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('sakums'))
+    else:
+        return render_template("pievienot.html",vards =session['vards'])
 
 
 @app.route("/visas_gramatas")
