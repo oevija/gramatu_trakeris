@@ -31,7 +31,7 @@ def pieteikties():
         conn.close()
 
         if atbilde and check_password_hash(atbilde['parole'], parole):
-            session['id'] = atbilde['id']
+            session['id'] = atbilde['ID']
             session['lietotajs'] = atbilde['lietotajvards']
             session['vards'] = atbilde['vards']
             session['tema'] = "dark"
@@ -69,6 +69,7 @@ def pievienot():
         conn.row_factory = sqlite3.Row  
         cursor = conn.cursor()
 
+        #lietotaja_id = session.get('lietotaji.ID')
         nosaukums= request.form.get("nosaukums")
         autors = request.form.get("autors")
         lpp= int(request.form.get("lpp"))
@@ -81,6 +82,17 @@ def pievienot():
             """
         cursor.execute(insert, (nosaukums, autors,lpp,saku,beidzu,vertejums))
         conn.commit()
+        selects =""" SELECT ID FROM gramatas ORDER BY ID DESC LIMIT 1"""
+        cursor.execute(selects)
+        gramatas_id = cursor.fetchone()['ID']
+        selects2 =""" SELECT ID FROM lietotaji ORDER BY ID DESC LIMIT 1"""
+        cursor.execute(selects2)
+        lietotaja_id = cursor.fetchone()['ID']
+        print(gramatas_id,lietotaja_id)
+        insert2 = """INSERT INTO biblioteka (lietotaja_id,gramatas_id) VALUES (?,?) """
+        
+        cursor.execute(insert2, (lietotaja_id,gramatas_id))
+        conn.commit()
         conn.close()
         return redirect(url_for('sakums'))
     else:
@@ -89,16 +101,27 @@ def pievienot():
 
 @app.route("/visas_gramatas")
 def visas_gramatas():
-   ''' 
     conn = sqlite3.connect("biblioteka.db")
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
     klienta_id = session['id']
-    sql_vaicajums = """ SELECT * FROM gramatas 
+    sql_vaicajums = """ SELECT * FROM gramatas INNER JOIN biblioteka ON gramatas.ID = biblioteka.gramatas_id WHERE biblioteka.lietotaja_id = ?
     """
-        cur.execute(sql_vaicajums,)
-    '''
-    #return render_template("visas_gramatas.html")
+    cur.execute(sql_vaicajums,(klienta_id,))
+    atbilde = cur.fetchall()
+    conn.close()
+
+    """
+    MEKLESANAS KODS
+    nosaukums = request.args.get("nosaukums","")
+        if nosaukums:
+            cursor.execute("SELECT * FROM top_250 WHERE Title LIKE ?", (f"%{nosaukums}%",))
+        
+        
+    """
+
+    return render_template("visas_gramatas.html",gr = atbilde)
+
 @app.route('/iziet')
 def logout():
     session.clear() 

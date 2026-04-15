@@ -1,0 +1,32 @@
+{% extends "baze.html" %}
+{% block content %}
+<h2 class="my-4 text-center">Visas izlasītās grāmatas</h2>
+
+<table class="table table-hover table-striped shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nosaukums</th>
+            <th>Autors</th>
+            <th>Lapaspušu skaits</th>
+            <th>Kad sāki lasīt</th>
+            <th>Kad izlasīji</th>
+            <th>Vērtējums</th>
+        </tr>
+    </thead>
+    <tbody>
+		{% for p in gr %}
+		<tr>
+		    <td>{{ p.ID }}</td>
+		    <td>{{ p.nosaukums }}</td>
+		    <td>{{ p.autors }}</td>
+		    <td>{{ p.lapas }} </td>
+		    <td>{{ p.saku_lasit }} </td>
+		    <td>{{ p.izlasits }}</td>
+		    <td class="text-danger">{{ p.vertejums }}</td>
+		    </td>
+		</tr>
+		{% endfor %}
+    </tbody>
+</table>
+{% endblock %}
