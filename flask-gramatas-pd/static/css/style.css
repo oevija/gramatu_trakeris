@@ -1,0 +1,33 @@
+:root {
+    --primary-custom: #2C3E50;    
+    --accent-custom: #E74C3C;    
+    --bg-light: #F8F9FA;          /* Gaišais fons */
+}
+
+/* Galvenās pogas krāsa */
+.btn-primary {
+    background-color: var(--primary-custom) !important;
+    border-color: var(--primary-custom) !important;
+}
+
+/* Navigācijas joslas fons (ja HTML izmanto class="navbar bg-primary") */
+.navbar.bg-primary {
+    background-color: var(--primary-custom) !important;
+}
+
+button{
+    font-family: 'Raleway', sans-serif; 
+}
+
+th,nav,label {
+    font-family: 'Raleway', sans-serif; 
+}
+
+h1,h2, h3 {
+    font-family: 'Quicksand', sans-serif; 
+    font-weight: bold;
+}
+
+p,footer,input {
+    font-family: 'Poppins', sans-serif; 
+}

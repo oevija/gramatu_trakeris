@@ -99,26 +99,23 @@ def pievienot():
         return render_template("pievienot.html",vards =session['vards'])
 
 
-@app.route("/visas_gramatas")
+@app.route("/visas_gramatas", methods=['GET', 'POST'])
 def visas_gramatas():
     conn = sqlite3.connect("biblioteka.db")
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
+
     klienta_id = session['id']
-    sql_vaicajums = """ SELECT * FROM gramatas INNER JOIN biblioteka ON gramatas.ID = biblioteka.gramatas_id WHERE biblioteka.lietotaja_id = ?
-    """
-    cur.execute(sql_vaicajums,(klienta_id,))
+    nosaukums = request.args.get("nosaukums")
+    if nosaukums:
+        cur.execute("SELECT * FROM gramatas WHERE nosaukums LIKE ?", (f"%{nosaukums}%",))
+    else:
+        sql_vaicajums = """ SELECT * FROM gramatas INNER JOIN biblioteka ON gramatas.ID = biblioteka.gramatas_id WHERE biblioteka.lietotaja_id = ?
+            """
+        cur.execute(sql_vaicajums,(klienta_id,))
     atbilde = cur.fetchall()
     conn.close()
-
-    """
-    MEKLESANAS KODS
-    nosaukums = request.args.get("nosaukums","")
-        if nosaukums:
-            cursor.execute("SELECT * FROM top_250 WHERE Title LIKE ?", (f"%{nosaukums}%",))
-        
-        
-    """
+    
 
     return render_template("visas_gramatas.html",gr = atbilde)
 
