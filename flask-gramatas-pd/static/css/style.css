@@ -1,7 +1,7 @@
 :root {
-    --primary-custom: #2C3E50;    
-    --accent-custom: #E74C3C;    
-    --bg-light: #F8F9FA;          /* Gaišais fons */
+    --primary-custom: #735751;    
+    --accent-custom: #2E2836;    
+    --bg-dark: #F8F9FA;          /* Gaišais fons */
 }
 
 /* Galvenās pogas krāsa */
@@ -14,20 +14,24 @@
 .navbar.bg-primary {
     background-color: var(--primary-custom) !important;
 }
+body {
+  background-color: var(--primary-custom) !important;
+}
+footer {
+  background-color: accent-custom;
+}
 
-button{
+th,td,nav,label,p,button {
     font-family: 'Raleway', sans-serif; 
+    font-color:#2E2836;
 }
 
-th,nav,label {
-    font-family: 'Raleway', sans-serif; 
+h2, h3 {
+    font-family: 'Quicksand', monospace; 
+    
 }
 
-h1,h2, h3 {
-    font-family: 'Quicksand', sans-serif; 
-    font-weight: bold;
-}
-
-p,footer,input {
+h1,footer,input {
     font-family: 'Poppins', sans-serif; 
+
 }
