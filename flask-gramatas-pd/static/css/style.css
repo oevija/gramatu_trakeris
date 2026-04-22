@@ -1,7 +1,13 @@
 :root {
-    --primary-custom: #735751;    
-    --accent-custom: #2E2836;    
-    --bg-dark: #F8F9FA;          /* Gaišais fons */
+    --primary-custom: #BAA898;    
+    --accent-custom: #735751;
+    --ievadisana:#7C6A66;
+    --virsraksti:#3A1803;
+    --body-fons:#C7B9AC;
+    --pogas:#755257;
+    --sarkans:#784249;
+    --bg-dark: #F8F9FA;
+    --card-body:#E3DCD5;
 }
 
 /* Galvenās pogas krāsa */
@@ -15,23 +21,67 @@
     background-color: var(--primary-custom) !important;
 }
 body {
-  background-color: var(--primary-custom) !important;
+  background-color: var(--body-fons) !important;
 }
-footer {
-  background-color: accent-custom;
+nav,tr {
+  background-color: var(--card-body) !important;
+}
+input {
+  background-color: var(--ievadisana) !important;
+  border-color: var(--ievadisana) !important;
+}
+.book-status-bar {
+  background-color: var(--card-body) !important;
 }
 
-th,td,nav,label,p,button {
+.btn-primary {
+    font-family: 'Raleway', sans-serif;
+    color:var(--primary-custom) !important;
+    background-color: var(--pogas) !important;
+    border-color: var(--pogas) !important;
+}
+.card-body {
+  background-color: var(--card-body) !important;
+}
+tr:hover {background-color: var(--sarkans) !important;}
+
+td,nav,label,p {
     font-family: 'Raleway', sans-serif; 
-    font-color:#2E2836;
+    color:var(--accent-custom) !important;
 }
 
 h2, h3 {
     font-family: 'Quicksand', monospace; 
-    
+    color:var(--accent-custom) !important;   
 }
 
-h1,footer,input {
+footer {
     font-family: 'Poppins', sans-serif; 
+    color:var(--accent-custom) !important;
+}
+h1,a {
+    font-family: 'Poppins', sans-serif; 
+    color:var(--virsraksti) !important;
+}
+ {
+    font-family: 'Poppins', sans-serif; 
+    color:var(--sarkans) !important;
+}
 
+th,input{
+    font-family: 'Raleway', sans-serif; 
+    color:var(--primary-custom) !important;
+}
+.placeholder{
+    font-family: 'Raleway', sans-serif; 
+    color:var(--primary-custom) !important;
+}
+::placeholder {
+  font-family: 'Raleway', sans-serif; 
+    color:var(--primary-custom) !important;
+}
+
+::-ms-input-placeholder { /* Edge 12 -18 */
+  font-family: 'Raleway', sans-serif; 
+    color:var(--primary-custom) !important;
 }

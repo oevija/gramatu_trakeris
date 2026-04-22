@@ -3,11 +3,11 @@
 <h2 class="my-4 text-center">Visas izlasītās grāmatas</h2>
 <form method="GET" action="/visas_gramatas">
 		<label for="nosaukums">Meklē grāmatu:</label>
-  		<input class="form-control" type="text" name="nosaukums" placeholder="Raksti nosaukuma fragmentu"><br>
+  		<input class="form-control" type="text" name="nosaukums" placeholder="Raksti nosaukuma fragmentu:"><br>
   		<button type="submit" class="btn btn-primary">Meklēt</button>
 	</form><br>
 <table class="table table-hover table-striped shadow-sm">
-    <thead class="table-dark">
+    <thead class="table">
         <tr>
             <th>ID</th>
             <th>Nosaukums</th>
@@ -27,7 +27,7 @@
 		    <td>{{ p.lapas }} </td>
 		    <td>{{ p.saku_lasit }} </td>
 		    <td>{{ p.izlasits }}</td>
-		    <td class="text-danger">{{ p.vertejums }}</td>
+		    <td>{{ p.vertejums }}</td>
 		    </td>
 		</tr>
 		{% endfor %}

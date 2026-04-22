@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect, session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
+import random
 
 app = Flask(__name__)
 
@@ -16,6 +17,17 @@ def gatekeeper():
 @app.route("/")
 def sakums():
     return render_template("sakums.html")
+
+@app.context_processor
+def teicieni():
+    quotes = [
+        ' "Kad iemācīsies lasīt, tu būsi mūžīgi brīvs." - Frederiks Duglass',
+        ' "Lasītājs nodzīvo tūkstoš dzīves pirms nāves... Cilvēks, kurš nekad nelasa, nodzīvo tikai vienu." - Džordžs R.R. Mārtins',   
+        ' "Grāmata ir dāvana, ko var atvērt atkal un atkal." - Garisons Keilors',
+        ' "Reading is a discount ticket to everywhere" - Mary Schmich',
+    ]
+    dienas_citats = random.choice(quotes)
+    return dict(dienas_citats=dienas_citats)
 
 @app.route("/pieteikties", methods=['GET', 'POST'])
 def pieteikties():
