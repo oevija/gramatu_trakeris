@@ -26,11 +26,18 @@ body {
 nav,tr {
   background-color: var(--card-body) !important;
 }
+.mytable {
+  --bs-table-bg: var(--card-body) !important;
+}
+th {
+  background-color: var(--accent-custom) !important;
+}
+tr:hover {--bs-table-hover-bg: var(--pogas) !important;}
 input {
   background-color: var(--ievadisana) !important;
   border-color: var(--ievadisana) !important;
 }
-.book-status-bar {
+.book-status-bar, --bs-table-bg {
   background-color: var(--card-body) !important;
 }
 
@@ -43,7 +50,6 @@ input {
 .card-body {
   background-color: var(--card-body) !important;
 }
-tr:hover {background-color: var(--sarkans) !important;}
 
 td,nav,label,p {
     font-family: 'Raleway', sans-serif; 
