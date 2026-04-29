@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, session
+from flask import flash, Flask, render_template, request, url_for, redirect, session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
@@ -25,6 +25,7 @@ def teicieni():
         ' "Lasītājs nodzīvo tūkstoš dzīves pirms nāves... Cilvēks, kurš nekad nelasa, nodzīvo tikai vienu." - Džordžs R.R. Mārtins',   
         ' "Grāmata ir dāvana, ko var atvērt atkal un atkal." - Garisons Keilors',
         ' "Reading is a discount ticket to everywhere" - Mary Schmich',
+        ' "Istaba bez grāmatām ir kā ķermenis bez dvēseles." - Cicerons',
     ]
     dienas_citats = random.choice(quotes)
     return dict(dienas_citats=dienas_citats)
@@ -46,10 +47,10 @@ def pieteikties():
             session['id'] = atbilde['ID']
             session['lietotajs'] = atbilde['lietotajvards']
             session['vards'] = atbilde['vards']
-            session['tema'] = "dark"
             return redirect("/")
         else:
-            return 'Nepareizi dati!'
+            flash("Nepareiza parole vai lietotājvārds!")
+            return redirect("/pieteikties")
 
     return render_template("pieteikties.html")
 
@@ -63,14 +64,22 @@ def registreties():
         conn = sqlite3.connect("biblioteka.db")
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        insert_sql = """
-                    INSERT INTO lietotaji (lietotajvards, vards, parole)
-                    VALUES (?, ?, ?)
-                    """
-        insert_dati = (lietotajvards, vards, parole)
-        c.execute(insert_sql, insert_dati)
-        conn.commit()
-        return redirect("/pieteikties")
+        selects = """SELECT lietotajvards FROM lietotaji WHERE lietotajvards = ? """
+        c.execute(selects,(lietotajvards,))
+        lietotajs = c.fetchone()['lietotajvards']
+    
+        if lietotajvards == lietotajs:
+            flash(f"Šāds lietotājvārds {lietotajvards} jau eksistē. Izvēlies citu!")
+            return redirect("/registreties")
+        else:
+            insert_sql = """
+                        INSERT INTO lietotaji (lietotajvards, vards, parole)
+                        VALUES (?, ?, ?)
+                        """
+            insert_dati = (lietotajvards, vards, parole)
+            c.execute(insert_sql, insert_dati)
+            conn.commit()
+            return redirect("/pieteikties")
 
     return render_template("registreties.html")
     
@@ -97,12 +106,8 @@ def pievienot():
         selects =""" SELECT ID FROM gramatas ORDER BY ID DESC LIMIT 1"""
         cursor.execute(selects)
         gramatas_id = cursor.fetchone()['ID']
-        selects2 =""" SELECT ID FROM lietotaji ORDER BY ID DESC LIMIT 1"""
-        cursor.execute(selects2)
-        lietotaja_id = cursor.fetchone()['ID']
-        print(gramatas_id,lietotaja_id)
+        lietotaja_id = session['id']
         insert2 = """INSERT INTO biblioteka (lietotaja_id,gramatas_id) VALUES (?,?) """
-        
         cursor.execute(insert2, (lietotaja_id,gramatas_id))
         conn.commit()
         conn.close()
@@ -125,6 +130,7 @@ def visas_gramatas():
         sql_vaicajums = """ SELECT * FROM gramatas INNER JOIN biblioteka ON gramatas.ID = biblioteka.gramatas_id WHERE biblioteka.lietotaja_id = ?
             """
         cur.execute(sql_vaicajums,(klienta_id,))
+    print(klienta_id)
     atbilde = cur.fetchall()
     conn.close()
     

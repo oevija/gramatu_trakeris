@@ -4,10 +4,11 @@
     --ievadisana:#7C6A66;
     --virsraksti:#3A1803;
     --body-fons:#C7B9AC;
-    --pogas:#755257;
+    --pogas:#68574D;
     --sarkans:#784249;
     --bg-dark: #F8F9FA;
     --card-body:#E3DCD5;
+    --hoover:#9E8589;
 }
 
 /* Galvenās pogas krāsa */
@@ -29,10 +30,14 @@ nav,tr {
 .mytable {
   --bs-table-bg: var(--card-body) !important;
 }
+hr {
+  color: var(--hoover) !important;
+  opacity:5;
+}
 th {
   background-color: var(--accent-custom) !important;
 }
-tr:hover {--bs-table-hover-bg: var(--pogas) !important;}
+tr:hover {--bs-table-bg: var(--hoover) !important;}
 input {
   background-color: var(--ievadisana) !important;
   border-color: var(--ievadisana) !important;
