@@ -24,7 +24,7 @@ def teicieni():
         ' "Kad iemācīsies lasīt, tu būsi mūžīgi brīvs." - Frederiks Duglass',
         ' "Lasītājs nodzīvo tūkstoš dzīves pirms nāves... Cilvēks, kurš nekad nelasa, nodzīvo tikai vienu." - Džordžs R.R. Mārtins',   
         ' "Grāmata ir dāvana, ko var atvērt atkal un atkal." - Garisons Keilors',
-        ' "Reading is a discount ticket to everywhere" - Mary Schmich',
+        ' "Lasīšana ir biļete uz visurieni!" - Marija Šmiča.',
         ' "Istaba bez grāmatām ir kā ķermenis bez dvēseles." - Cicerons',
     ]
     dienas_citats = random.choice(quotes)
@@ -66,9 +66,9 @@ def registreties():
         c = conn.cursor()
         selects = """SELECT lietotajvards FROM lietotaji WHERE lietotajvards = ? """
         c.execute(selects,(lietotajvards,))
-        lietotajs = c.fetchone()['lietotajvards']
+        lietotajs = c.fetchone()
     
-        if lietotajvards == lietotajs:
+        if lietotajs and lietotajvards == lietotajs['lietotajvards']:
             flash(f"Šāds lietotājvārds {lietotajvards} jau eksistē. Izvēlies citu!")
             return redirect("/registreties")
         else:
@@ -124,8 +124,8 @@ def visas_gramatas():
 
     klienta_id = session['id']
     nosaukums = request.args.get("nosaukums")
-    if nosaukums:
-        cur.execute("SELECT * FROM gramatas WHERE nosaukums LIKE ?", (f"%{nosaukums}%",))
+    if nosaukums: #JĀSALABO
+        cur.execute("SELECT * FROM gramatas INNER JOIN biblioteka ON biblioteka.gramatas_id = gramatas.ID WHERE biblioteka.lietotaja_id = ?  AND nosaukums LIKE ?", (f"{klienta_id}", (f"%{nosaukums}%")))
     else:
         sql_vaicajums = """ SELECT * FROM gramatas INNER JOIN biblioteka ON gramatas.ID = biblioteka.gramatas_id WHERE biblioteka.lietotaja_id = ?
             """

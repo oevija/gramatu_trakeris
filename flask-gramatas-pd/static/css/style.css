@@ -46,6 +46,7 @@ input {
   background-color: var(--card-body) !important;
 }
 
+
 .btn-primary {
     font-family: 'Raleway', sans-serif;
     color:var(--primary-custom) !important;
@@ -96,3 +97,4 @@ th,input{
   font-family: 'Raleway', sans-serif; 
     color:var(--primary-custom) !important;
 }
+
