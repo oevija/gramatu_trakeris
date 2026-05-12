@@ -7,19 +7,19 @@ app = Flask(__name__)
 
 app.secret_key = 'kaza1'
 
-@app.before_request
+@app.before_request #sadala publiskos ceļus no pārējiem kuriem var piekļūt pierakstoties kontā
 def gatekeeper():
     publiskie_celi = ['sakums', 'pieteikties', 'registreties', 'static']
 
     if 'id' not in session and request.endpoint not in publiskie_celi:
         return redirect("/pieteikties")
 
-@app.route("/")
+@app.route("/") #parāda sākuma lapu kurā rakstīts teksts par programmu
 def sakums():
     return render_template("sakums.html")
 
 @app.context_processor
-def teicieni():
+def teicieni(): #rāda lapas augšpusē teicienus par grāmatām, katru reizi citu kad atjauno lapu
     quotes = [
         ' "Kad iemācīsies lasīt, tu būsi mūžīgi brīvs." - Frederiks Duglass',
         ' "Lasītājs nodzīvo tūkstoš dzīves pirms nāves... Cilvēks, kurš nekad nelasa, nodzīvo tikai vienu." - Džordžs R.R. Mārtins',   
@@ -30,7 +30,7 @@ def teicieni():
     dienas_citats = random.choice(quotes)
     return dict(dienas_citats=dienas_citats)
 
-@app.route("/pieteikties", methods=['GET', 'POST'])
+@app.route("/pieteikties", methods=['GET', 'POST']) #kods kurš pieraksta jau esošu lietotāju un ielaiž to programmā
 def pieteikties():
     if request.method == 'POST':
         lietotajs = request.form.get('lietotajs')
@@ -54,7 +54,7 @@ def pieteikties():
 
     return render_template("pieteikties.html")
 
-@app.route("/registreties", methods=['GET', 'POST'])
+@app.route("/registreties", methods=['GET', 'POST']) # kods kas reģistrē jaunu lietotāju saglabā datubāzē viņa pierakstīšanās datus
 def registreties():
     if request.method == 'POST':
         lietotajvards = request.form.get("lietotajs")
@@ -83,7 +83,7 @@ def registreties():
 
     return render_template("registreties.html")
     
-@app.route("/pievienot", methods=['GET', 'POST'])
+@app.route("/pievienot", methods=['GET', 'POST']) #kods kas pievieno jaunu grāmatu saglabājot visu info par to datubāzē
 def pievienot():
     if request.method == 'POST':
         conn = sqlite3.connect("biblioteka.db")
@@ -111,12 +111,13 @@ def pievienot():
         cursor.execute(insert2, (lietotaja_id,gramatas_id))
         conn.commit()
         conn.close()
-        return redirect(url_for('sakums'))
+        flash("Grāmata pievienota!")
+        return redirect("/pievienot")
     else:
         return render_template("pievienot.html",vards =session['vards'])
 
 
-@app.route("/visas_gramatas", methods=['GET', 'POST'])
+@app.route("/visas_gramatas", methods=['GET', 'POST']) #kods kas parāda visas lietotāja pievienotās grāmatas un ļauj meklēt starp tām, kadu specifisku grāmatu pēc nosaukuma
 def visas_gramatas():
     conn = sqlite3.connect("biblioteka.db")
     conn.row_factory = sqlite3.Row
@@ -137,7 +138,7 @@ def visas_gramatas():
 
     return render_template("visas_gramatas.html",gr = atbilde)
 
-@app.route('/iziet')
+@app.route('/iziet') #kods kurš iziet no sesijas, pēc šī atkal jāpierakstās vai jāreģistrējas
 def logout():
     session.clear() 
     return redirect('/')
